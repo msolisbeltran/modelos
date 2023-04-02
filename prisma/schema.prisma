@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model catpermisos {
+  ipermisoid Int @id @default(autoincrement())
+  dtcreated DateTime   @default(now())
+  dtupdated DateTime?
+  vpermiso String? @db.VarChar(255)
+  vdescripcion String? @db.VarChar(255)
+  iactivo Boolean @default(true)
+  roleroutpermisos rel_roleroutepermiso[]
+}
+
+model catroutes {
+  irouteid  Int @id @default(autoincrement())
+  dtcreated DateTime   @default(now())
+  dtupdated DateTime?
+  vroute String? @db.VarChar(255)
+  vfeature String? @db.VarChar(255)
+  iactivo Boolean @default(true)
+  @@unique([vroute, vfeature])
+  roleroutpermisos rel_roleroutepermiso[]
+}
+
+model catroles {
+  iroleid  Int @id @default(autoincrement())
+  dtcreated DateTime   @default(now())
+  dtupdated DateTime?
+  vrole String? @db.VarChar(255)
+  vdescription String? @db.VarChar(255)
+  ishowclient Boolean @default(true)
+  iactivo Boolean @default(true)
+  @@unique([vrole])
+  roleroutpermisos rel_roleroutepermiso[]
+}
+
+model rel_roleroutepermiso {
+  iroleroutepermisoid Int @id @default(autoincrement())
+  dtcreated DateTime   @default(now())
+  dtupdated DateTime?
+  iroleid Int
+  irouteid Int
+  ipermisoid Int
+  roles catroles @relation(fields: [iroleid],  references: [iroleid])
+  routes catroutes @relation(fields:[irouteid],  references: [irouteid])
+  permisos catpermisos @relation(fields:[ipermisoid], references: [ipermisoid])
+  @@unique([iroleid,irouteid,ipermisoid])
+}
