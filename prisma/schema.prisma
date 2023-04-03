@@ -13,7 +13,7 @@ datasource db {
 model catpermisos {
   ipermisoid Int @id @default(autoincrement())
   dtcreated DateTime   @default(now())
-  dtupdated DateTime?
+  dtupdated DateTime? @updatedAt
   vpermiso String? @db.VarChar(255)
   vdescripcion String? @db.VarChar(255)
   iactivo Boolean @default(true)
@@ -23,7 +23,7 @@ model catpermisos {
 model catroutes {
   irouteid  Int @id @default(autoincrement())
   dtcreated DateTime   @default(now())
-  dtupdated DateTime?
+  dtupdated DateTime? @updatedAt
   vroute String? @db.VarChar(255)
   vfeature String? @db.VarChar(255)
   iactivo Boolean @default(true)
@@ -34,7 +34,7 @@ model catroutes {
 model catroles {
   iroleid  Int @id @default(autoincrement())
   dtcreated DateTime   @default(now())
-  dtupdated DateTime?
+  dtupdated DateTime? @updatedAt
   vrole String? @db.VarChar(255)
   vdescription String? @db.VarChar(255)
   ishowclient Boolean @default(true)
@@ -46,7 +46,7 @@ model catroles {
 model rel_roleroutepermiso {
   iroleroutepermisoid Int @id @default(autoincrement())
   dtcreated DateTime   @default(now())
-  dtupdated DateTime?
+  dtupdated DateTime? @updatedAt
   iroleid Int
   irouteid Int
   ipermisoid Int
