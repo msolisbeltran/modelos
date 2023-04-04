@@ -18,6 +18,8 @@ model catpermisos {
   vdescripcion String? @db.VarChar(255)
   iactivo Boolean @default(true)
   roleroutpermisos rel_roleroutepermiso[]
+
+  @@unique([vpermiso])
 }
 
 model catroutes {
@@ -27,8 +29,9 @@ model catroutes {
   vroute String? @db.VarChar(255)
   vfeature String? @db.VarChar(255)
   iactivo Boolean @default(true)
-  @@unique([vroute, vfeature])
   roleroutpermisos rel_roleroutepermiso[]
+
+  @@unique([vroute, vfeature])
 }
 
 model catroles {
@@ -39,8 +42,9 @@ model catroles {
   vdescription String? @db.VarChar(255)
   ishowclient Boolean @default(true)
   iactivo Boolean @default(true)
-  @@unique([vrole])
   roleroutpermisos rel_roleroutepermiso[]
+
+  @@unique([vrole])
 }
 
 model rel_roleroutepermiso {
@@ -53,5 +57,6 @@ model rel_roleroutepermiso {
   roles catroles @relation(fields: [iroleid],  references: [iroleid])
   routes catroutes @relation(fields:[irouteid],  references: [irouteid])
   permisos catpermisos @relation(fields:[ipermisoid], references: [ipermisoid])
+ 
   @@unique([iroleid,irouteid,ipermisoid])
 }
